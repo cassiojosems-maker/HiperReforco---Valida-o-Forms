@@ -72,6 +72,15 @@ export function FormCardsGrid({
           tagBg: 'bg-indigo-100 text-indigo-900 border-indigo-300',
           avatar: '🏡'
         };
+      case 'roteiro-g-clinico':
+        return {
+          headerBg: 'from-purple-500/10 via-purple-50 to-white',
+          borderColor: 'border-purple-200/80 hover:border-purple-400',
+          accentColor: 'text-purple-700',
+          btnBg: 'bg-purple-600 hover:bg-purple-700 text-white font-bold',
+          tagBg: 'bg-purple-100 text-purple-900 border-purple-300',
+          avatar: '🧠'
+        };
       case 'familia-sem-aee':
       default:
         return {
@@ -104,11 +113,11 @@ export function FormCardsGrid({
 
         <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span>4 formulários ativos e verificados</span>
+          <span>5 formulários ativos e verificados</span>
         </div>
       </div>
 
-      {/* Grid of 4 Cards */}
+      {/* Grid of 5 Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-7">
         {VALIDATION_FORMS.map((form) => {
           const style = getFormStyle(form.id);
@@ -137,11 +146,6 @@ export function FormCardsGrid({
                         <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${style.tagBg}`}>
                           {form.badge}
                         </span>
-                        {form.hypothesisCode && (
-                          <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-rose-600 text-white">
-                            {form.hypothesisCode}
-                          </span>
-                        )}
                       </div>
                       <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 mt-1 tracking-tight">
                         {form.title}
@@ -161,7 +165,7 @@ export function FormCardsGrid({
                     <HelpCircle className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
                     <div>
                       <p className="text-xs font-bold text-slate-800">
-                        Público-alvo prioritário:
+                        {form.category === 'familia' ? 'Para quem é este formulário:' : 'Público-alvo prioritário:'}
                       </p>
                       <p className="text-xs text-slate-600 leading-relaxed mt-0.5">
                         {form.audienceDescription}
@@ -175,7 +179,7 @@ export function FormCardsGrid({
               <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-4">
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2.5">
-                    O que este formulário avalia:
+                    {form.category === 'familia' ? 'Sobre o que vamos perguntar:' : 'O que este formulário avalia:'}
                   </h4>
                   <ul className="space-y-2">
                     {form.keyTopics.map((topic, i) => (
@@ -188,7 +192,7 @@ export function FormCardsGrid({
 
                   {form.hypothesisNote && (
                     <div className="mt-3 p-2.5 rounded-xl bg-rose-50/70 border border-rose-200/70 text-[11px] text-rose-800">
-                      <strong>Hipótese de Pesquisa:</strong> {form.hypothesisNote}
+                      <strong>Por que sua resposta é importante:</strong> {form.hypothesisNote}
                     </div>
                   )}
                 </div>

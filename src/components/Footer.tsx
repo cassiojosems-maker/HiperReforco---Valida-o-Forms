@@ -50,12 +50,17 @@ export function Footer() {
               </li>
               <li>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLScP_YDK8NDI6D2Ylypj-DFAJQ78yRrKiYCWm4OXsfrXVOUwwg/viewform" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600 hover:underline">
-                  Roteiro D — Família com AEE
+                  Roteiro D — Pais e Mães (Com Apoio na Escola)
                 </a>
               </li>
               <li>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSfJubH6LmG-PLZqenwNoxs6dw5BiGiiJEMus2FzD-MFjTh7wQ/viewform" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600 hover:underline">
-                  Roteiro E — Família sem AEE (H6)
+                  Roteiro E — Pais e Mães (Sem Apoio na Escola)
+                </a>
+              </li>
+              <li>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScsfRM_33ZV9DDDSBEmOoOqtrQiV2lTo3AGS-eH4RSvdyFtgw/viewform?usp=sharing&ouid=111041022314259236485" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600 hover:underline">
+                  Roteiro G — Atendimento Clínico
                 </a>
               </li>
             </ul>

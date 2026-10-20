@@ -21,7 +21,7 @@ export function Header({
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   const navItems = [
-    { id: 'forms' as const, label: 'Formulários', icon: FileText, count: '4' },
+    { id: 'forms' as const, label: 'Formulários', icon: FileText, count: '5' },
     { id: 'wizard' as const, label: 'Descubra o Seu', icon: Compass },
     { id: 'hiper' as const, label: 'Módulo HIPER', icon: Bot, highlight: true },
     { id: 'team' as const, label: 'Painel da Pesquisa', icon: FolderLock }

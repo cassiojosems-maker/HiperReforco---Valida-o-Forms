@@ -48,14 +48,14 @@ export function Hero({ onSelectRoleQuick, onOpenWizard, highContrast = false }: 
         </div>
 
         {/* Fast Action Cards / Pill buttons */}
-        <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 max-w-4xl mx-auto">
+        <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3 max-w-5xl mx-auto">
           <button
             onClick={() => onSelectRoleQuick('gestores')}
             className="flex flex-col items-center justify-center p-3 sm:p-4 rounded-xl bg-white border border-amber-200 hover:border-amber-400 hover:shadow-md hover:-translate-y-0.5 transition-all text-center group cursor-pointer"
           >
             <span className="text-2xl mb-1 group-hover:scale-110 transition-transform">🏛️</span>
             <span className="font-bold text-xs sm:text-sm text-slate-900">Gestores Públicos</span>
-            <span className="text-[11px] text-amber-700 font-medium">Secretarias & Direção</span>
+            <span className="text-[11px] text-amber-700 font-medium">Triagem • Secretarias</span>
           </button>
 
           <button
@@ -64,7 +64,7 @@ export function Hero({ onSelectRoleQuick, onOpenWizard, highContrast = false }: 
           >
             <span className="text-2xl mb-1 group-hover:scale-110 transition-transform">👩‍🏫</span>
             <span className="font-bold text-xs sm:text-sm text-slate-900">Professora Regente</span>
-            <span className="text-[11px] text-emerald-700 font-medium">Sala de Aula Regular</span>
+            <span className="text-[11px] text-emerald-700 font-medium">Roteiro A • Sala Regular</span>
           </button>
 
           <button
@@ -72,8 +72,8 @@ export function Hero({ onSelectRoleQuick, onOpenWizard, highContrast = false }: 
             className="flex flex-col items-center justify-center p-3 sm:p-4 rounded-xl bg-white border border-indigo-200 hover:border-indigo-400 hover:shadow-md hover:-translate-y-0.5 transition-all text-center group cursor-pointer"
           >
             <span className="text-2xl mb-1 group-hover:scale-110 transition-transform">🏡</span>
-            <span className="font-bold text-xs sm:text-sm text-slate-900">Família com AEE</span>
-            <span className="text-[11px] text-indigo-700 font-medium">Conta com Sala Recursos</span>
+            <span className="font-bold text-xs sm:text-sm text-slate-900">Pais (Com Apoio)</span>
+            <span className="text-[11px] text-indigo-700 font-medium">Tem sala de apoio na escola</span>
           </button>
 
           <button
@@ -81,8 +81,17 @@ export function Hero({ onSelectRoleQuick, onOpenWizard, highContrast = false }: 
             className="flex flex-col items-center justify-center p-3 sm:p-4 rounded-xl bg-white border border-rose-200 hover:border-rose-400 hover:shadow-md hover:-translate-y-0.5 transition-all text-center group cursor-pointer"
           >
             <span className="text-2xl mb-1 group-hover:scale-110 transition-transform">🤝</span>
-            <span className="font-bold text-xs sm:text-sm text-slate-900">Família sem AEE</span>
-            <span className="text-[11px] text-rose-700 font-semibold">Sem Suporte AEE (H6)</span>
+            <span className="font-bold text-xs sm:text-sm text-slate-900">Pais (Sem Apoio)</span>
+            <span className="text-[11px] text-rose-700 font-semibold">Sem sala de apoio na escola</span>
+          </button>
+
+          <button
+            onClick={() => onSelectRoleQuick('roteiro-g-clinico')}
+            className="col-span-2 sm:col-span-1 flex flex-col items-center justify-center p-3 sm:p-4 rounded-xl bg-white border border-purple-200 hover:border-purple-400 hover:shadow-md hover:-translate-y-0.5 transition-all text-center group cursor-pointer"
+          >
+            <span className="text-2xl mb-1 group-hover:scale-110 transition-transform">🧠</span>
+            <span className="font-bold text-xs sm:text-sm text-slate-900">Atendimento Clínico</span>
+            <span className="text-[11px] text-purple-700 font-semibold">Roteiro G • Psicopedagogia</span>
           </button>
         </div>
 

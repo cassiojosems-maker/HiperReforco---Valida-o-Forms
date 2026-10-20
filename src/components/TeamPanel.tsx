@@ -41,7 +41,7 @@ export function TeamPanel() {
             Painel Administrativo da Pesquisa HiperReforço
           </h2>
           <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
-            Acesso centralizado aos 4 formulários oficiais no Google Forms (edição e envio) e ao repositório unificado de dados e planilhas de validação no Google Drive.
+            Acesso centralizado aos 5 formulários oficiais no Google Forms (edição e envio) e ao repositório unificado de dados e planilhas de validação no Google Drive.
           </p>
         </div>
 
@@ -64,7 +64,7 @@ export function TeamPanel() {
           <div>
             <h3 className="font-extrabold text-base sm:text-lg text-slate-900 flex items-center gap-2">
               <FileSpreadsheet className="w-5 h-5 text-indigo-600" />
-              <span>Matriz de Formulários de Validação (4 Roteiros)</span>
+              <span>Matriz de Formulários de Validação (5 Instrumentos: Triagem, Roteiros A, D, E e G)</span>
             </h3>
             <p className="text-xs text-slate-500 mt-0.5">
               Links diretos para envio a participantes e edição pela equipe do projeto

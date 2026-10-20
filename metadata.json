@@ -1,6 +1,6 @@
 {
   "name": "HiperReforço — Portal de Validação e Formulários",
-  "description": "Plataforma de direcionamento para os formulários de pesquisa do HiperReforço: Gestores Públicos, Professoras Regentes e Famílias (com e sem AEE).",
+  "description": "Plataforma de direcionamento para os 5 formulários de pesquisa do HiperReforço: Gestores Públicos (Triagem), Professoras Regentes (Roteiro A), Famílias com e sem AEE (Roteiros D e E) e Atendimento Clínico (Roteiro G).",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

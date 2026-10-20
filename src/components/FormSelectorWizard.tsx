@@ -73,19 +73,19 @@ export function FormSelectorWizard({ onSelectForm, onPreviewForm }: FormSelector
             Passo 1 de 2: Qual das alternativas melhor descreve sua função principal?
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <button
               onClick={() => handleRoleSelect('gestor')}
               className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${
                 selectedRole === 'gestor'
-                  ? 'border-indigo-600 bg-indigo-50/70 ring-2 ring-indigo-500/20'
-                  : 'border-slate-200 hover:border-indigo-300 hover:bg-slate-50/80'
+                  ? 'border-amber-600 bg-amber-50/70 ring-2 ring-amber-500/20'
+                  : 'border-slate-200 hover:border-amber-300 hover:bg-slate-50/80'
               }`}
             >
               <div className="text-3xl mb-2">🏛️</div>
               <div className="font-bold text-sm text-slate-900">Gestor(a) Público(a)</div>
               <p className="text-xs text-slate-500 mt-1 leading-snug">
-                Secretarias de Educação, Direção Escolar, Coordenação ou Técnicos.
+                Secretarias de Educação, Direção Escolar, Coordenação ou Técnicos (Triagem).
               </p>
             </button>
 
@@ -100,7 +100,22 @@ export function FormSelectorWizard({ onSelectForm, onPreviewForm }: FormSelector
               <div className="text-3xl mb-2">👩‍🏫</div>
               <div className="font-bold text-sm text-slate-900">Professora Regente</div>
               <p className="text-xs text-slate-500 mt-1 leading-snug">
-                Docente que atua na sala de aula comum/regular com estudantes diversos.
+                Docente que atua na sala de aula comum/regular com estudantes diversos (Roteiro A).
+              </p>
+            </button>
+
+            <button
+              onClick={() => handleRoleSelect('clinico')}
+              className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${
+                selectedRole === 'clinico'
+                  ? 'border-purple-600 bg-purple-50/70 ring-2 ring-purple-500/20'
+                  : 'border-slate-200 hover:border-purple-300 hover:bg-slate-50/80'
+              }`}
+            >
+              <div className="text-3xl mb-2">🧠</div>
+              <div className="font-bold text-sm text-slate-900">Atendimento Clínico / Psicopedagogia</div>
+              <p className="text-xs text-slate-500 mt-1 leading-snug">
+                Psicopedagogos, psicólogos e terapeutas que atendem crianças com demandas de aprendizagem (Roteiro G).
               </p>
             </button>
 
@@ -115,7 +130,7 @@ export function FormSelectorWizard({ onSelectForm, onPreviewForm }: FormSelector
               <div className="text-3xl mb-2">🏡</div>
               <div className="font-bold text-sm text-slate-900">Mãe, Pai ou Responsável</div>
               <p className="text-xs text-slate-500 mt-1 leading-snug">
-                Familiar ou cuidador de criança/jovem neurodivergente.
+                Tenho um filho(a) com autismo (TEA), TDAH ou dificuldade para aprender.
               </p>
             </button>
           </div>
@@ -126,11 +141,11 @@ export function FormSelectorWizard({ onSelectForm, onPreviewForm }: FormSelector
       {step === 2 && (
         <div className="pt-6 space-y-4">
           <div className="flex items-center gap-2 text-xs font-semibold text-indigo-700 bg-indigo-50 px-3 py-1.5 rounded-lg w-fit">
-            <span>Passo 2 de 2 • Contexto de Atendimento Escolar</span>
+            <span>Passo 2 de 2 • Apoio na Escola</span>
           </div>
 
           <p className="font-bold text-base text-slate-900">
-            A escola do seu filho(a) oferece Atendimento Educacional Especializado (AEE / Sala de Recursos) e ele(a) frequenta esse serviço?
+            Na escola, seu filho(a) recebe alguma ajuda extra fora do horário da aula normal (aquela salinha de apoio ou sala de recursos)?
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
@@ -144,10 +159,10 @@ export function FormSelectorWizard({ onSelectForm, onPreviewForm }: FormSelector
             >
               <div className="flex items-center gap-2 font-bold text-sm text-slate-900 mb-1">
                 <span className="text-xl">✅</span>
-                <span>Sim, frequenta o AEE</span>
+                <span>Sim, tem esse apoio na escola</span>
               </div>
               <p className="text-xs text-slate-600 leading-relaxed">
-                A escola conta com sala de recursos ou profissional de AEE no contraturno e a criança já participa.
+                Ele(a) vai na salinha de apoio no outro turno ou recebe atendimento especial na própria escola.
               </p>
             </button>
 
@@ -161,10 +176,10 @@ export function FormSelectorWizard({ onSelectForm, onPreviewForm }: FormSelector
             >
               <div className="flex items-center gap-2 font-bold text-sm text-slate-900 mb-1">
                 <span className="text-xl">⚠️</span>
-                <span>Não / Ainda não tem AEE</span>
+                <span>Não tem esse apoio na escola</span>
               </div>
               <p className="text-xs text-slate-600 leading-relaxed">
-                A escola não oferece sala de recursos, não há vaga ou a criança ainda não acessa o atendimento especializado.
+                A escola não tem essa sala, não conseguiu vaga ou ele(a) só assiste à aula normal.
               </p>
             </button>
           </div>
@@ -194,9 +209,9 @@ export function FormSelectorWizard({ onSelectForm, onPreviewForm }: FormSelector
               </p>
             </div>
 
-            {matchedForm.hypothesisCode && (
+            {matchedForm.hypothesisNote && (
               <div className="text-xs bg-white/10 px-3 py-1.5 rounded-lg text-amber-200">
-                <strong>Pesquisa {matchedForm.hypothesisCode}:</strong> {matchedForm.hypothesisNote}
+                <strong>💡 Nota:</strong> {matchedForm.hypothesisNote}
               </div>
             )}
 

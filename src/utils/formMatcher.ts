@@ -2,7 +2,7 @@ export interface ValidationForm {
   id: string;
   title: string;
   codeName: string;
-  category: 'gestao' | 'docente' | 'familia';
+  category: 'gestao' | 'docente' | 'familia' | 'clinico';
   badge: string;
   badgeColor: string;
   estimatedMinutes: number;
@@ -54,47 +54,65 @@ export const VALIDATION_FORMS: ValidationForm[] = [
   },
   {
     id: 'familia-com-aee',
-    title: 'Roteiro D — Família com AEE',
+    title: 'Roteiro D — Pais e Mães (Com Apoio na Escola)',
     codeName: 'Roteiro D — Família com AEE',
     category: 'familia',
-    badge: 'Família • Com Atendimento AEE',
+    badge: 'Para a Família • Com Sala de Apoio',
     badgeColor: 'bg-indigo-100 text-indigo-800 border-indigo-300 dark:bg-indigo-950/60 dark:text-indigo-300 dark:border-indigo-800',
     estimatedMinutes: 4,
     sendUrl: 'https://docs.google.com/forms/d/e/1FAIpQLScP_YDK8NDI6D2Ylypj-DFAJQ78yRrKiYCWm4OXsfrXVOUwwg/viewform',
     editUrl: 'https://docs.google.com/forms/d/1Ffofe3Gm3UtEf4vjiFPFXizGh512DygvqQgSUoPQZ9M/edit',
-    audienceHeadline: 'Mães, Pais e Responsáveis cujo filho(a) frequenta AEE',
-    audienceDescription: 'Para famílias de crianças neurodivergentes que contam com suporte de Sala de Recursos Multifuncionais / Atendimento Especializado.',
+    audienceHeadline: 'Mães, pais e responsáveis cujo filho(a) tem atendimento especial na escola',
+    audienceDescription: 'Escolha este se o seu filho(a) já recebe ajuda extra na própria escola (como salinha de apoio, atendimento no outro turno ou professora de apoio).',
     keyTopics: [
-      'Percepção da evolução e conexão com a equipe do AEE',
-      'Aproveitamento dos interesses da criança nas atividades de contraturno',
-      'Continuidade das estratégias de aprendizagem em casa'
+      'Como seu filho(a) está se desenvolvendo com esse apoio da escola',
+      'Se a escola usa os assuntos que ele(a) mais ama para ensinar',
+      'Como é a rotina de tarefas, estudos e brincadeiras em casa'
     ]
   },
   {
     id: 'familia-sem-aee',
-    title: 'Roteiro E — Família sem AEE',
+    title: 'Roteiro E — Pais e Mães (Sem Apoio na Escola)',
     codeName: 'Roteiro E — Família sem AEE (H6)',
     category: 'familia',
-    badge: 'Família • Sem Atendimento AEE',
+    badge: 'Para a Família • Sem Sala de Apoio',
     badgeColor: 'bg-rose-100 text-rose-800 border-rose-300 dark:bg-rose-950/60 dark:text-rose-300 dark:border-rose-800',
     estimatedMinutes: 4,
     sendUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSfJubH6LmG-PLZqenwNoxs6dw5BiGiiJEMus2FzD-MFjTh7wQ/viewform',
     editUrl: 'https://docs.google.com/forms/d/11z8YDpfCbJOAGeVKuo0AT9MKhuSjUJe9zBSE4DEcgDQ/edit',
     hypothesisCode: 'H6',
-    hypothesisNote: 'Validação da hipótese de lacuna de suporte pedagógico especializado e sobrecarga familiar.',
-    audienceHeadline: 'Mães, Pais e Responsáveis SEM suporte de AEE na escola',
-    audienceDescription: 'Para famílias de crianças neurodivergentes cuja escola ainda NÃO disponibiliza AEE, sala de recursos ou vaga especializada.',
+    hypothesisNote: 'Feito especialmente para ouvir quem se vira em casa para ajudar o filho(a) sem ter apoio especial da escola.',
+    audienceHeadline: 'Mães, pais e responsáveis cujo filho(a) NÃO tem atendimento especial na escola',
+    audienceDescription: 'Escolha este se o seu filho(a) tem dificuldade para aprender, autismo ou TDAH, mas a escola ainda NÃO oferece esse apoio extra (ou não conseguiu vaga) e ele(a) só vai na aula normal.',
     keyTopics: [
-      'Barreiras de acesso ao atendimento especializado',
-      'Estratégias autônomas criadas pela família no dia a dia',
-      'Necessidade de ferramentas acessíveis para guiar o aprendizado'
+      'As dificuldades de não conseguir esse apoio especial na escola',
+      'O que você faz em casa para ajudar seu filho(a) a aprender',
+      'Como uma ferramenta simples e gratuita ajudaria no seu dia a dia'
+    ]
+  },
+  {
+    id: 'roteiro-g-clinico',
+    title: 'Roteiro G — Atendimento Clínico',
+    codeName: 'Roteiro G — Material pedagógico no atendimento clínico',
+    category: 'clinico',
+    badge: 'Clínica & Psicopedagogia',
+    badgeColor: 'bg-purple-100 text-purple-800 border-purple-300 dark:bg-purple-950/60 dark:text-purple-300 dark:border-purple-800',
+    estimatedMinutes: 10,
+    sendUrl: 'https://docs.google.com/forms/d/e/1FAIpQLScsfRM_33ZV9DDDSBEmOoOqtrQiV2lTo3AGS-eH4RSvdyFtgw/viewform?usp=sharing&ouid=111041022314259236485',
+    editUrl: 'https://docs.google.com/forms/d/e/1FAIpQLScsfRM_33ZV9DDDSBEmOoOqtrQiV2lTo3AGS-eH4RSvdyFtgw/viewform?usp=sharing&ouid=111041022314259236485',
+    audienceHeadline: 'Psicopedagogos, Psicólogos e Profissionais da Saúde/Aprendizagem',
+    audienceDescription: 'Pesquisa sobre material pedagógico no atendimento clínico com psicopedagogos, psicólogos e demais profissionais que atendem crianças com demandas de aprendizagem.',
+    keyTopics: [
+      'Sua prática clínica no atendimento a crianças com demandas de aprendizagem',
+      'O que você indica para famílias e escolas',
+      'Materiais pedagógicos e recursos que você compra e utiliza'
     ]
   }
 ];
 
 export const DRIVE_FOLDER_URL = 'https://drive.google.com/drive/folders/1WXnygC9_oHrRTT5DK0d5ab6SD5mGRwh8';
 
-export type UserRole = 'gestor' | 'professor' | 'familia';
+export type UserRole = 'gestor' | 'professor' | 'familia' | 'clinico';
 
 export interface FormMatchCriteria {
   role: UserRole;
@@ -107,6 +125,9 @@ export function matchForm(criteria: FormMatchCriteria): ValidationForm {
   }
   if (criteria.role === 'professor') {
     return VALIDATION_FORMS[1];
+  }
+  if (criteria.role === 'clinico') {
+    return VALIDATION_FORMS[4];
   }
   if (criteria.role === 'familia') {
     return criteria.hasAEE ? VALIDATION_FORMS[2] : VALIDATION_FORMS[3];
