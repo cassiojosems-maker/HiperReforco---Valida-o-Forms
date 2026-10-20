@@ -72,8 +72,8 @@ export function Hero({ onSelectRoleQuick, onOpenWizard, highContrast = false }: 
             className="flex flex-col items-center justify-center p-3 sm:p-4 rounded-xl bg-white border border-indigo-200 hover:border-indigo-400 hover:shadow-md hover:-translate-y-0.5 transition-all text-center group cursor-pointer"
           >
             <span className="text-2xl mb-1 group-hover:scale-110 transition-transform">🏡</span>
-            <span className="font-bold text-xs sm:text-sm text-slate-900">Pais (Com Apoio)</span>
-            <span className="text-[11px] text-indigo-700 font-medium">Tem sala de apoio na escola</span>
+            <span className="font-bold text-xs sm:text-sm text-slate-900">Família com Apoio</span>
+            <span className="text-[11px] text-indigo-700 font-medium">Roteiro D</span>
           </button>
 
           <button
@@ -81,8 +81,8 @@ export function Hero({ onSelectRoleQuick, onOpenWizard, highContrast = false }: 
             className="flex flex-col items-center justify-center p-3 sm:p-4 rounded-xl bg-white border border-rose-200 hover:border-rose-400 hover:shadow-md hover:-translate-y-0.5 transition-all text-center group cursor-pointer"
           >
             <span className="text-2xl mb-1 group-hover:scale-110 transition-transform">🤝</span>
-            <span className="font-bold text-xs sm:text-sm text-slate-900">Pais (Sem Apoio)</span>
-            <span className="text-[11px] text-rose-700 font-semibold">Sem sala de apoio na escola</span>
+            <span className="font-bold text-xs sm:text-sm text-slate-900">Família sem Apoio</span>
+            <span className="text-[11px] text-rose-700 font-semibold">Roteiro E</span>
           </button>
 
           <button
@@ -91,7 +91,7 @@ export function Hero({ onSelectRoleQuick, onOpenWizard, highContrast = false }: 
           >
             <span className="text-2xl mb-1 group-hover:scale-110 transition-transform">🧠</span>
             <span className="font-bold text-xs sm:text-sm text-slate-900">Atendimento Clínico</span>
-            <span className="text-[11px] text-purple-700 font-semibold">Roteiro G • Psicopedagogia</span>
+            <span className="text-[11px] text-purple-700 font-semibold">Roteiro G</span>
           </button>
         </div>
 
@@ -116,14 +116,6 @@ export function Hero({ onSelectRoleQuick, onOpenWizard, highContrast = false }: 
 
         {/* Trust & Meta metrics */}
         <div className="mt-8 pt-6 border-t border-slate-200/60 max-w-4xl mx-auto flex flex-wrap items-center justify-center gap-y-3 gap-x-8 text-xs text-slate-500">
-          <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4 text-indigo-600" />
-            <span>Tempo médio: <strong>3 a 5 minutos</strong></span>
-          </div>
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-emerald-600" />
-            <span>100% Anônimo & <strong>Conforme a LGPD</strong></span>
-          </div>
           <div className="flex items-center gap-2">
             <HeartHandshake className="w-4 h-4 text-amber-600" />
             <span>Pesquisa Aplicada para <strong>Educação Inclusiva</strong></span>

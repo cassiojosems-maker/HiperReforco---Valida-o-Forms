@@ -130,22 +130,22 @@ export function FormSelectorWizard({ onSelectForm, onPreviewForm }: FormSelector
               <div className="text-3xl mb-2">🏡</div>
               <div className="font-bold text-sm text-slate-900">Mãe, Pai ou Responsável</div>
               <p className="text-xs text-slate-500 mt-1 leading-snug">
-                Tenho um filho(a) com autismo (TEA), TDAH ou dificuldade para aprender.
+                Responsável por criança ou jovem em idade escolar (Roteiro D ou E).
               </p>
             </button>
           </div>
         </div>
       )}
 
-      {/* Step 2: Family AEE Question */}
+      {/* Step 2: Family Specialized Support Question */}
       {step === 2 && (
         <div className="pt-6 space-y-4">
           <div className="flex items-center gap-2 text-xs font-semibold text-indigo-700 bg-indigo-50 px-3 py-1.5 rounded-lg w-fit">
-            <span>Passo 2 de 2 • Apoio na Escola</span>
+            <span>Passo 2 de 2 • Atendimento Especializado na Escola</span>
           </div>
 
           <p className="font-bold text-base text-slate-900">
-            Na escola, seu filho(a) recebe alguma ajuda extra fora do horário da aula normal (aquela salinha de apoio ou sala de recursos)?
+            Seu filho já recebe atendimento especializado na escola — sala de recursos, contraturno ou professora de apoio?
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
@@ -159,10 +159,10 @@ export function FormSelectorWizard({ onSelectForm, onPreviewForm }: FormSelector
             >
               <div className="flex items-center gap-2 font-bold text-sm text-slate-900 mb-1">
                 <span className="text-xl">✅</span>
-                <span>Sim, tem esse apoio na escola</span>
+                <span>Sim, já recebe atendimento especializado</span>
               </div>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Ele(a) vai na salinha de apoio no outro turno ou recebe atendimento especial na própria escola.
+                Sala de recursos, contraturno ou professora de apoio na escola.
               </p>
             </button>
 
@@ -176,10 +176,10 @@ export function FormSelectorWizard({ onSelectForm, onPreviewForm }: FormSelector
             >
               <div className="flex items-center gap-2 font-bold text-sm text-slate-900 mb-1">
                 <span className="text-xl">⚠️</span>
-                <span>Não tem esse apoio na escola</span>
+                <span>Ainda não tem atendimento especializado</span>
               </div>
               <p className="text-xs text-slate-600 leading-relaxed">
-                A escola não tem essa sala, não conseguiu vaga ou ele(a) só assiste à aula normal.
+                Ainda não tem sala de recursos, contraturno ou atendimento especializado na escola.
               </p>
             </button>
           </div>
@@ -208,12 +208,6 @@ export function FormSelectorWizard({ onSelectForm, onPreviewForm }: FormSelector
                 {matchedForm.audienceDescription}
               </p>
             </div>
-
-            {matchedForm.hypothesisNote && (
-              <div className="text-xs bg-white/10 px-3 py-1.5 rounded-lg text-amber-200">
-                <strong>💡 Nota:</strong> {matchedForm.hypothesisNote}
-              </div>
-            )}
 
             <div className="pt-2 flex flex-col sm:flex-row gap-2.5">
               <a

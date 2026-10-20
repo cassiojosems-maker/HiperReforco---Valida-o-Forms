@@ -1,0 +1,242 @@
+PROMPT PARA O GOOGLE AI STUDIO — CORREÇÕES DO SITE DE VALIDAÇÃO
+HiperReforço · 20/10/2026
+Repositório: cassiojosems-maker/HiperReforco---Valida-o-Forms
+No ar em: https://hiperreforco-validacao.ai.studio/
+
+Rode este prompt inteiro. São sete itens, em ordem de prioridade.
+Não altere o layout, as cores nem a estrutura de navegação.
+
+================================================================
+
+CONTEXTO
+
+Este é o site que direciona participantes aos cinco formulários de
+pesquisa do HiperReforço. Ele está público e já foi divulgado.
+
+Os problemas abaixo foram verificados: parte no código do repositório,
+parte abrindo a página publicada numa janela sem conta logada.
+
+
+DIAGNÓSTICO JÁ FEITO, NÃO PRECISA INVESTIGAR
+
+1. Acrescentar ?admin=1 ao endereço abre o Painel da Coordenação, sem
+   pedir o PIN. O PIN 'hiper2026' está escrito no código que vai para o
+   navegador de qualquer visitante.
+2. O painel afirma que nenhuma informação sensível de criança é exposta,
+   enquanto o módulo HIPER, no mesmo site, pede nome, idade exata e
+   diagnóstico da criança.
+3. Os textos dos cards descrevem perguntas que não existem nos
+   formulários, e em alguns casos anunciam ao respondente o que a
+   pesquisa quer ouvir.
+4. Os tempos anunciados nos cards estão abaixo do real.
+5. Os cards usam diagnóstico (autismo, TDAH, TEA, AH/SD) como critério
+   de triagem. O critério correto é ter ou não atendimento educacional
+   especializado na escola.
+
+
+REGRAS INEGOCIÁVEIS
+
+- Nenhum e-mail, nenhuma chave de API e nenhuma senha dentro do código.
+- Nenhum campo que peça nome, diagnóstico, laudo ou CID de criança.
+- Nenhuma pergunta sobre o futuro ("como ajudaria", "você usaria").
+- Nenhuma promessa de gratuidade, de nota, de aprendizagem ou de Ideb.
+
+
+================================================================
+ITEM 1 — O PAINEL DA COORDENAÇÃO
+================================================================
+
+Hoje o painel é protegido por um PIN no código do navegador, que além
+disso é contornado por ?admin=1 ou #admin no endereço. Senha no código
+do cliente não é senha, e manter o teatro é pior que não ter.
+
+Escolha a saída honesta: REMOVA O PAINEL DO SITE PÚBLICO.
+
+- Apague o componente TeamPanel da aplicação, a constante ADMIN_PIN, o
+  estado isAdminUnlocked e a leitura de ?admin / #admin da URL.
+- Apague também o arquivo utils/formMatcher na parte que guarda os
+  editUrl dos formulários, e a constante DRIVE_FOLDER_URL.
+- Os links públicos de resposta (sendUrl) PERMANECEM: são eles que o
+  site existe para distribuir.
+
+O que a equipe precisa — links de edição e pasta do Drive — já está no
+Google Drive, atrás da conta Google de quem tem acesso. Não precisa
+estar numa página aberta.
+
+
+================================================================
+ITEM 2 — O MÓDULO HIPER
+================================================================
+
+O componente HiperDiagnosticDemo coleta nome da criança, idade exata,
+diagnóstico (p9), duração/intensidade (p3) e contexto escolar (p8).
+
+Verifique antes de mexer: p3, p8 e p9 são lidos pelo gerador de
+relatório e NUNCA usados no texto de saída. São passivo puro.
+
+Faça o seguinte:
+
+2.1  Apague as perguntas p3, p8 e p9 do questionário e do tipo
+     DiagnosticAnswers. Confirme que o relatório gerado continua
+     idêntico.
+
+2.2  Na pergunta p1, remova o campo de nome da criança. Em seu lugar,
+     um campo opcional "Como você quer chamar a criança neste
+     relatório" com o texto de ajuda: "Use um apelido ou as iniciais.
+     Não escreva o nome completo." Se vier vazio, o relatório usa
+     "a criança".
+
+2.3  Troque a idade exata por faixa: "até 6", "7 a 10", "11 a 14",
+     "15 ou mais". Ajuste o relatório para usar a faixa.
+
+2.4  Acrescente, acima da primeira pergunta, um aviso visível:
+     "Este é um módulo de demonstração. Nada do que você escrever é
+     enviado ou armazenado — tudo acontece no seu navegador e some ao
+     fechar a página. Ainda assim, não escreva nome completo,
+     diagnóstico, laudo ou CID."
+
+2.5  Em todo campo de texto livre, acrescente abaixo do campo:
+     "Não escreva o nome completo nem o diagnóstico da criança."
+
+
+================================================================
+ITEM 3 — OS TEXTOS DOS CARDS
+================================================================
+
+Os cards descrevem perguntas que os formulários não fazem, e alguns
+anunciam ao respondente o que a pesquisa quer ouvir — o que contamina
+a resposta antes da primeira pergunta.
+
+Substitua os textos pelos abaixo, exatamente.
+
+--- TRIAGEM — GESTORES PÚBLICOS ---
+Tempo: ~3 min
+Público: Secretários, coordenações de rede e equipes técnicas de
+         educação municipal ou estadual.
+O que vamos perguntar:
+  • O que a rede contratou nos últimos 24 meses, e o que segue em uso
+  • Quem participa da decisão de contratar, e de qual rubrica sai
+  • Qual o maior obstáculo hoje para atender às exigências da política
+    de educação especial
+
+--- ROTEIRO A — PROFESSORA REGENTE ---
+Tempo: ~10 min
+Público: Professoras e professores da sala regular que têm estudantes
+         com atendimento educacional especializado.
+O que vamos perguntar:
+  • Como foi a última vez que você adaptou uma atividade, do começo ao
+    fim
+  • Quanto tempo levou e em que momento do dia
+  • O que você já tentou, e quem te ajuda nisso hoje
+
+--- ROTEIRO D — FAMÍLIA COM APOIO NA ESCOLA ---
+Tempo: ~10 min
+Para quem: Escolha este se seu filho já recebe atendimento
+           especializado na escola — sala de recursos, contraturno ou
+           professora de apoio.
+O que vamos perguntar:
+  • Como foi a última vez que vocês sentaram para estudar em casa
+  • O que foi mais difícil nessa vez
+  • O que vocês já tentaram fora da escola
+
+--- ROTEIRO E — FAMÍLIA SEM APOIO NA ESCOLA ---
+Tempo: ~8 min
+Para quem: Escolha este se seu filho ainda não tem atendimento
+           especializado na escola.
+O que vamos perguntar:
+  • Como foi a última vez que vocês sentaram para estudar em casa
+  • O que você faz quando ele trava numa atividade
+  • O que vocês já tentaram fora da escola
+
+--- ROTEIRO G — ATENDIMENTO CLÍNICO ---
+Tempo: ~10 min
+Público: Psicopedagogos, psicólogos e demais profissionais que atendem
+         crianças com demandas de aprendizagem.
+O que vamos perguntar:
+  • Como foi a última vez que você preparou material para um
+    atendimento
+  • O que você indicou a famílias e escolas nos últimos 12 meses
+  • O que você comprou para a sua própria prática
+
+REGRAS PARA ESSES TEXTOS, caso você precise reescrever algum:
+  - Descrever apenas perguntas que o formulário realmente faz.
+  - Nunca anunciar o que a pesquisa espera encontrar.
+  - Nunca usar diagnóstico (autismo, TDAH, TEA, AH/SD, neurodivergente)
+    como critério de escolha do formulário. O critério é ter ou não
+    atendimento especializado na escola.
+  - Nunca prometer gratuidade, nota, aprendizagem ou Ideb.
+  - Nunca escrever pergunta sobre o futuro.
+
+
+================================================================
+ITEM 4 — A FRASE SOBRE LGPD
+================================================================
+
+Remova do site a frase "Nenhuma informação de identificação sensível da
+criança é exposta ou comercializada" e qualquer variação dela. Ela sai
+junto com o painel, no Item 1; se sobrar em outro lugar, apague.
+
+Não substitua por outra promessa de segurança. O que vale é o termo de
+consentimento dentro de cada formulário, que já existe.
+
+
+================================================================
+ITEM 5 — O SCRIPT DE PARTIDA
+================================================================
+
+Em package.json, troque:
+    "start": "node server.ts"
+por:
+    "start": "tsx server.ts"
+
+O node não executa TypeScript. Confirme que não existe nenhum arquivo
+server.js no repositório; se existir, apague. Um único servidor:
+server.ts.
+
+
+================================================================
+ITEM 6 — DEPENDÊNCIA SEM USO
+================================================================
+
+Remova @google/genai do package.json. Não há nenhuma chamada a ela em
+todo o projeto. Confirme com uma busca antes de remover.
+
+
+================================================================
+ITEM 7 — CONTAGEM HONESTA
+================================================================
+
+O cabeçalho diz "5 formulários ativos e verificados". Troque por
+"5 formulários de pesquisa". "Verificados" não significa nada para o
+leitor e soa a selo inventado.
+
+
+================================================================
+COMO ENTREGAR
+================================================================
+
+1. Os arquivos alterados, completos.
+2. Lista do que mudou, item por item, de 1 a 7.
+3. Responda em uma frase cada:
+   - O que acontece agora se alguém abrir a página com ?admin=1 ?
+   - Sobrou algum campo que peça nome ou diagnóstico de criança?
+   - Sobrou algum link de edição de formulário no código do cliente?
+
+
+================================================================
+TESTES DEPOIS DE PUBLICAR — nesta ordem
+================================================================
+
+Numa janela anônima, sem conta logada:
+
+1. Abrir a página            → os cinco cards aparecem
+2. Abrir com ?admin=1        → NADA de painel, página igual à de cima
+3. Abrir com #admin          → idem
+4. Abrir o módulo HIPER      → sem campo de nome, sem diagnóstico,
+                               idade por faixa, aviso no topo
+5. Clicar em "Preencher" num card → abre o Google Forms certo
+6. Procurar "hiper2026" no código da página (Ctrl+U, Ctrl+F)
+                             → não pode aparecer
+
+O teste 2 é o que prova a correção principal. Os demais passam mesmo
+com o painel exposto — não se contente com eles.

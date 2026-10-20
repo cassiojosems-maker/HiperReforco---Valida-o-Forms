@@ -113,7 +113,7 @@ export function FormCardsGrid({
 
         <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span>5 formulários ativos e verificados</span>
+          <span>5 formulários de pesquisa</span>
         </div>
       </div>
 
@@ -165,7 +165,7 @@ export function FormCardsGrid({
                     <HelpCircle className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
                     <div>
                       <p className="text-xs font-bold text-slate-800">
-                        {form.category === 'familia' ? 'Para quem é este formulário:' : 'Público-alvo prioritário:'}
+                        {form.category === 'familia' ? 'Para quem:' : 'Público:'}
                       </p>
                       <p className="text-xs text-slate-600 leading-relaxed mt-0.5">
                         {form.audienceDescription}
@@ -179,7 +179,7 @@ export function FormCardsGrid({
               <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-4">
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2.5">
-                    {form.category === 'familia' ? 'Sobre o que vamos perguntar:' : 'O que este formulário avalia:'}
+                    O que vamos perguntar:
                   </h4>
                   <ul className="space-y-2">
                     {form.keyTopics.map((topic, i) => (
@@ -189,12 +189,6 @@ export function FormCardsGrid({
                       </li>
                     ))}
                   </ul>
-
-                  {form.hypothesisNote && (
-                    <div className="mt-3 p-2.5 rounded-xl bg-rose-50/70 border border-rose-200/70 text-[11px] text-rose-800">
-                      <strong>Por que sua resposta é importante:</strong> {form.hypothesisNote}
-                    </div>
-                  )}
                 </div>
 
                 {/* Action Buttons */}

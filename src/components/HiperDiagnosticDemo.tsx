@@ -1,6 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
-  Bot,
   Sparkles,
   Send,
   RotateCcw,
@@ -11,11 +10,14 @@ import {
   Printer,
   ChevronRight,
   Lightbulb,
-  ArrowRight
+  ArrowRight,
+  ShieldAlert,
+  Info
 } from 'lucide-react';
 import {
   DIAGNOSTIC_QUESTIONS,
   DiagnosticAnswers,
+  AgeBracket,
   ExpansionReport,
   generateExpansionReport,
   HIPER_PROACTIVE_OPENING
@@ -30,6 +32,8 @@ interface Message {
   report?: ExpansionReport;
 }
 
+const AGE_BRACKETS: AgeBracket[] = ['até 6', '7 a 10', '11 a 14', '15 ou mais'];
+
 export function HiperDiagnosticDemo() {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -41,6 +45,8 @@ export function HiperDiagnosticDemo() {
   ]);
   const [currentQuestionIdx, setCurrentQuestionIdx] = useState<number | null>(null);
   const [inputText, setInputText] = useState('');
+  const [selectedNickname, setSelectedNickname] = useState('');
+  const [selectedAgeBracket, setSelectedAgeBracket] = useState<AgeBracket>('7 a 10');
   const [selectedStyles, setSelectedStyles] = useState<string[]>([]);
   const [answers, setAnswers] = useState<Partial<DiagnosticAnswers>>({});
   const [generatedReport, setGeneratedReport] = useState<ExpansionReport | null>(null);
@@ -62,7 +68,6 @@ export function HiperDiagnosticDemo() {
   }, [messages, isTyping, generatedReport]);
 
   const handleStartQuestionnaire = () => {
-    // Add user response
     setMessages(prev => [
       ...prev,
       { id: `user-start-${Date.now()}`, sender: 'user', text: 'Sim, pode começar! 🚀' }
@@ -91,7 +96,7 @@ export function HiperDiagnosticDemo() {
       {
         id: `hiper-explain-${Date.now()}`,
         sender: 'hiper',
-        text: 'O HiperReforço mapeia os hiperfocos da criança para construir "pontes temáticas" em direção a novos conhecimentos, sem romper com o que ela já ama. São 10 perguntas curtas e eu gero um relatório completo com níveis de proximidade (🟢 🟡 🔴) e estratégias de transição. Quer começar agora?'
+        text: 'O HiperReforço mapeia os hiperfocos da criança para construir "pontes temáticas" em direção a novos conhecimentos, sem romper com o que ela já ama. São 7 perguntas curtas e eu gero um relatório completo com níveis de proximidade (🟢 🟡 🔴) e estratégias de transição. Quer começar agora?'
       }
     ]);
   };
@@ -111,33 +116,68 @@ export function HiperDiagnosticDemo() {
   const getEmpatheticFeedback = (idx: number, answerText: string): string => {
     switch (idx) {
       case 0:
-        return `Excelente, anotado! Ter essa referência de idade nos ajuda a calibrar a complexidade das atividades.`;
+        return 'Excelente, anotado! Ter essa faixa de idade nos ajuda a calibrar a maturidade das atividades.';
       case 1:
-        return `Que tema fascinante! ${answerText.trim()} tem uma riqueza de detalhes enorme para a gente explorar.`;
+        return `Que tema fascinante! ${answerText.trim()} tem uma riqueza de detalhes enorme para explorarmos.`;
       case 2:
-        return `Compreendo perfeitamente essa imersão e o quanto ela mobiliza a atenção no cotidiano.`;
+        return 'Muito interessante! Hiperfocos anteriores guardam elos afetivos valiosos para conexões seguras.';
       case 3:
-        return `Muito interessante! Hiperfocos antigos guardam elos afetivos valiosos para conexões seguras.`;
+        return 'Perfeito! Esses interesses secundários funcionam como excelentes ramificações de curiosidade.';
       case 4:
-        return `Perfeito! Esses interesses secundários funcionam como excelentes ramificações de curiosidade.`;
+        return 'Fundamental saber disso. Nosso compromisso é nunca propor atividades que toquem nessas rejeições.';
       case 5:
-        return `Fundamental saber disso. Nosso compromisso é nunca propor atividades que toquem nessas rejeições.`;
+        return 'Ótimo mapeamento do canal preferencial de aprendizagem. Vamos priorizar esses formatos.';
       case 6:
-        return `Ótimo mapeamento do canal preferencial de aprendizagem. Vamos priorizar esses formatos.`;
-      case 7:
-        return `Muito claro. Saber o contexto de ensino orienta a viabilidade prática da rotina escolar.`;
-      case 8:
-        return `Anotado. Essa informação calibra internamente a cadência de transição e a sensibilidade sensorial.`;
-      case 9:
-        return `Entendido. Compreender esse desafio é chave para construirmos pontes que reduzam a sobrecarga e o estresse.`;
+        return 'Entendido. Compreender esse desafio é chave para construirmos pontes que reduzam a sobrecarga e o estresse.';
       default:
-        return `Perfeito, compreendido!`;
+        return 'Perfeito, compreendido!';
     }
+  };
+
+  const handleNicknameAgeSubmit = () => {
+    const nick = selectedNickname.trim();
+    const bracket = selectedAgeBracket;
+    const displayText = nick 
+      ? `${nick} • Faixa: ${bracket} anos` 
+      : `A criança • Faixa: ${bracket} anos`;
+
+    const updatedAnswers: Partial<DiagnosticAnswers> = {
+      ...answers,
+      childNickname: nick,
+      ageBracket: bracket
+    };
+    setAnswers(updatedAnswers);
+
+    setMessages(prev => [
+      ...prev,
+      { id: `user-ans-0`, sender: 'user', text: displayText }
+    ]);
+
+    setIsTyping(true);
+    setTimeout(() => {
+      setIsTyping(false);
+      const empathy = getEmpatheticFeedback(0, displayText);
+      setCurrentQuestionIdx(1);
+      setMessages(prev => [
+        ...prev,
+        {
+          id: `hiper-q-1`,
+          sender: 'hiper',
+          text: `${empathy}\n\n${DIAGNOSTIC_QUESTIONS[1].promptText}`,
+          questionIndex: 1
+        }
+      ]);
+    }, 600);
   };
 
   const handleAnswerSubmit = (customText?: string) => {
     if (currentQuestionIdx === null) return;
     const q = DIAGNOSTIC_QUESTIONS[currentQuestionIdx];
+
+    if (q.type === 'nickname_age') {
+      handleNicknameAgeSubmit();
+      return;
+    }
 
     let answerVal = '';
     if (q.type === 'multiselect') {
@@ -148,18 +188,21 @@ export function HiperDiagnosticDemo() {
       if (!answerVal) return;
     }
 
-    // Record answer
-    const key = `p${currentQuestionIdx + 1}_${
-      ['childNameAge', 'currentHyperfocus', 'durationIntensity', 'pastHyperfocus', 'secondaryInterest', 'rejections', 'learningStyles', 'schoolContext', 'diagnosisOptional', 'dailyChallenge'][currentQuestionIdx]
-    }` as keyof DiagnosticAnswers;
+    // Map question index to key in answers
+    let key: keyof DiagnosticAnswers;
+    if (currentQuestionIdx === 1) key = 'currentHyperfocus';
+    else if (currentQuestionIdx === 2) key = 'pastHyperfocus';
+    else if (currentQuestionIdx === 3) key = 'secondaryInterest';
+    else if (currentQuestionIdx === 4) key = 'rejections';
+    else if (currentQuestionIdx === 5) key = 'learningStyles';
+    else key = 'dailyChallenge';
 
-    const updatedAnswers = {
+    const updatedAnswers: Partial<DiagnosticAnswers> = {
       ...answers,
       [key]: q.type === 'multiselect' ? selectedStyles : answerVal
     };
     setAnswers(updatedAnswers);
 
-    // Add user message
     setMessages(prev => [
       ...prev,
       {
@@ -194,7 +237,7 @@ export function HiperDiagnosticDemo() {
           }
         ]);
       } else {
-        // Complete!
+        // All 7 questions completed!
         setCurrentQuestionIdx(null);
         const finalReport = generateExpansionReport(updatedAnswers as DiagnosticAnswers);
         setGeneratedReport(finalReport);
@@ -204,7 +247,7 @@ export function HiperDiagnosticDemo() {
           {
             id: `hiper-complete`,
             sender: 'hiper',
-            text: `${empathy}\n\nConcluímos todas as 10 perguntas! Estou gerando o Relatório de Expansão de Hiperfoco com as pontes temáticas personalizadas... ✨`,
+            text: `${empathy}\n\nConcluímos todas as 7 perguntas! Estou gerando o Relatório de Expansão de Hiperfoco com as pontes temáticas personalizadas... ✨`,
             report: finalReport
           }
         ]);
@@ -217,42 +260,36 @@ export function HiperDiagnosticDemo() {
 
     if (sampleType === 'ferrovias') {
       sampleAnswers = {
-        p1_childNameAge: 'Lucas, 8 anos',
-        p2_currentHyperfocus: 'Trens de carga, ferrovias e malha de metrô',
-        p3_durationIntensity: 'Mais de 1 ano e meio. Desenha trilhos e estuda linhas quase todo dia.',
-        p4_pastHyperfocus: 'Animais marinhos e tubarões',
-        p5_secondaryInterest: 'Mapas de rotas e placas de sinalização',
-        p6_rejections: 'Odeia copiar textos longos sem ilustrações e barulhos repentinos',
-        p7_learningStyles: ['videos_imagens', 'experimentos_construcoes', 'colecionar_catalogar'],
-        p8_schoolContext: '3º ano do Ensino Fundamental em escola regular com AEE 2x/semana',
-        p9_diagnosisOptional: 'TEA nível 1 de suporte',
-        p10_dailyChallenge: 'Forte frustração ao interromper a brincadeira de trilhos para o banho ou lição de casa.'
+        childNickname: 'L.',
+        ageBracket: '7 a 10',
+        currentHyperfocus: 'Trens de carga, ferrovias e malha de metrô',
+        pastHyperfocus: 'Animais marinhos e tubarões',
+        secondaryInterest: 'Mapas de rotas e placas de sinalização',
+        rejections: 'Odeia copiar textos longos sem ilustrações e barulhos repentinos',
+        learningStyles: ['videos_imagens', 'experimentos_construcoes', 'colecionar_catalogar'],
+        dailyChallenge: 'Forte frustração ao interromper a brincadeira de trilhos para o banho ou lição de casa.'
       };
     } else if (sampleType === 'minecraft') {
       sampleAnswers = {
-        p1_childNameAge: 'Sofia, 10 anos',
-        p2_currentHyperfocus: 'Minecraft, construção de redstone e biomas',
-        p3_durationIntensity: 'Cerca de 2 anos, assiste tutoriais e planeja construções constantemente.',
-        p4_pastHyperfocus: 'Lego e blocos magnéticos',
-        p5_secondaryInterest: 'História medieval e castelos',
-        p6_rejections: 'Cálculos mecânicos sem contexto e tarefas sem objetivo claro',
-        p7_learningStyles: ['jogos_competicoes', 'experimentos_construcoes', 'historias_narrativas'],
-        p8_schoolContext: '5º ano do Ensino Fundamental em escola regular sem AEE',
-        p9_diagnosisOptional: 'TDAH combinado',
-        p10_dailyChallenge: 'Dificuldade de manter o foco em tarefas escolares com pouco estímulo visual.'
+        childNickname: 'S.',
+        ageBracket: '7 a 10',
+        currentHyperfocus: 'Minecraft, construção de redstone e biomas',
+        pastHyperfocus: 'Lego e blocos magnéticos',
+        secondaryInterest: 'História medieval e castelos',
+        rejections: 'Cálculos mecânicos sem contexto e tarefas sem objetivo claro',
+        learningStyles: ['jogos_competicoes', 'experimentos_construcoes', 'historias_narrativas'],
+        dailyChallenge: 'Dificuldade de manter o foco em tarefas escolares com pouco estímulo visual.'
       };
     } else {
       sampleAnswers = {
-        p1_childNameAge: 'Enzo, 7 anos',
-        p2_currentHyperfocus: 'Dinossauros do período Cretáceo e fósseis',
-        p3_durationIntensity: 'Há 1 ano. Sabe o nome científico de mais de 40 espécies.',
-        p4_pastHyperfocus: 'Super-heróis (Vingadores)',
-        p5_secondaryInterest: 'Desenhar vulcões e colecionar pedras',
-        p6_rejections: 'Atividades com regras rígidas de grupo ou muita cobrança de caligrafia',
-        p7_learningStyles: ['videos_imagens', 'colecionar_catalogar', 'leitura_escrita'],
-        p8_schoolContext: '2º ano do Ensino Fundamental em escola regular com suporte de mediação',
-        p9_diagnosisOptional: 'TEA nível 1 e Altas Habilidades / Superdotação',
-        p10_dailyChallenge: 'Dificuldade de conversar com os colegas da turma sobre outros temas além de dinossauros.'
+        childNickname: 'E.',
+        ageBracket: '7 a 10',
+        currentHyperfocus: 'Dinossauros do período Cretáceo e fósseis',
+        pastHyperfocus: 'Super-heróis',
+        secondaryInterest: 'Desenhar vulcões e colecionar pedras',
+        rejections: 'Atividades com regras rígidas de grupo ou muita cobrança de caligrafia',
+        learningStyles: ['videos_imagens', 'colecionar_catalogar', 'leitura_escrita'],
+        dailyChallenge: 'Dificuldade de conversar com os colegas da turma sobre outros temas além de dinossauros.'
       };
     }
 
@@ -265,7 +302,7 @@ export function HiperDiagnosticDemo() {
       {
         id: 'msg-sample',
         sender: 'hiper',
-        text: `Carregamos o caso ilustrativo de **${report.childName} (${report.childAge})** com hiperfoco em **${report.currentHyperfocus}**. Veja o relatório completo de pontes temáticas gerado abaixo:`,
+        text: `Carregamos o caso ilustrativo com hiperfoco em **${report.currentHyperfocus}** (${report.childAge}). Veja o relatório completo de pontes temáticas gerado abaixo:`,
         report
       }
     ]);
@@ -282,6 +319,8 @@ export function HiperDiagnosticDemo() {
     ]);
     setCurrentQuestionIdx(null);
     setInputText('');
+    setSelectedNickname('');
+    setSelectedAgeBracket('7 a 10');
     setSelectedStyles([]);
     setAnswers({});
     setGeneratedReport(null);
@@ -338,7 +377,7 @@ export function HiperDiagnosticDemo() {
               HIPER: Questionário & Expansão de Hiperfocos
             </h2>
             <p className="text-indigo-200 text-xs sm:text-sm max-w-2xl leading-relaxed">
-              Experimente ao vivo o motor pedagógico que transforma hiperfocos neurodivergentes em portais de curiosidade através de pontes temáticas graduais (Nível 🟢 Adjacente, 🟡 Exploratório e 🔴 Novo Território).
+              Experimente ao vivo o motor pedagógico que transforma hiperfocos em portais de curiosidade através de pontes temáticas graduais (Nível 🟢 Adjacente, 🟡 Exploratório e 🔴 Novo Território).
             </p>
           </div>
         </div>
@@ -352,23 +391,36 @@ export function HiperDiagnosticDemo() {
           <div className="flex flex-wrap gap-1.5">
             <button
               onClick={() => handleLoadSample('ferrovias')}
-              className="text-xs px-2.5 py-1.5 bg-white/20 hover:bg-white/30 rounded-lg text-white font-medium transition-colors"
+              className="text-xs px-2.5 py-1.5 bg-white/20 hover:bg-white/30 rounded-lg text-white font-medium transition-colors cursor-pointer"
             >
-              🚂 Lucas (Trens)
+              🚂 Caso 1 (Trens)
             </button>
             <button
               onClick={() => handleLoadSample('minecraft')}
-              className="text-xs px-2.5 py-1.5 bg-white/20 hover:bg-white/30 rounded-lg text-white font-medium transition-colors"
+              className="text-xs px-2.5 py-1.5 bg-white/20 hover:bg-white/30 rounded-lg text-white font-medium transition-colors cursor-pointer"
             >
-              🎮 Sofia (Minecraft)
+              🎮 Caso 2 (Minecraft)
             </button>
             <button
               onClick={() => handleLoadSample('dinossauros')}
-              className="text-xs px-2.5 py-1.5 bg-white/20 hover:bg-white/30 rounded-lg text-white font-medium transition-colors"
+              className="text-xs px-2.5 py-1.5 bg-white/20 hover:bg-white/30 rounded-lg text-white font-medium transition-colors cursor-pointer"
             >
-              🦖 Enzo (Fósseis)
+              🦖 Caso 3 (Fósseis)
             </button>
           </div>
+        </div>
+      </div>
+
+      {/* Persistent Visible Notice (Item 2.4) */}
+      <div className="bg-amber-50 border-2 border-amber-300/80 rounded-2xl p-4 sm:p-5 flex items-start gap-3.5 shadow-xs">
+        <ShieldAlert className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+        <div className="space-y-1 text-xs sm:text-sm text-amber-950 leading-relaxed">
+          <p className="font-bold text-amber-900">
+            Aviso de Privacidade do Módulo de Demonstração
+          </p>
+          <p>
+            Este é um módulo de demonstração. Nada do que você escrever é enviado ou armazenado — tudo acontece no seu navegador e some ao fechar a página. Ainda assim, não escreva nome completo, diagnóstico, laudo ou CID.
+          </p>
         </div>
       </div>
 
@@ -394,7 +446,7 @@ export function HiperDiagnosticDemo() {
               </div>
               <p className="text-xs text-slate-500">
                 {currentQuestionIdx !== null 
-                  ? `Pergunta ${currentQuestionIdx + 1} de 10: ${DIAGNOSTIC_QUESTIONS[currentQuestionIdx].label}`
+                  ? `Pergunta ${currentQuestionIdx + 1} de 7: ${DIAGNOSTIC_QUESTIONS[currentQuestionIdx].label}`
                   : generatedReport 
                     ? 'Relatório de Expansão Gerado com Sucesso'
                     : 'Sessão Pronta para Início'}
@@ -404,7 +456,7 @@ export function HiperDiagnosticDemo() {
 
           <button
             onClick={handleResetChat}
-            className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-indigo-600 px-3 py-1.5 rounded-xl hover:bg-slate-100 transition-colors"
+            className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-indigo-600 px-3 py-1.5 rounded-xl hover:bg-slate-100 transition-colors cursor-pointer"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Reiniciar</span>
@@ -413,6 +465,15 @@ export function HiperDiagnosticDemo() {
 
         {/* Chat Messages Feed */}
         <div ref={chatFeedRef} className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 bg-slate-50/50">
+          
+          {/* In-feed Privacy Reminder above first question (Item 2.4) */}
+          <div className="bg-amber-50/80 border border-amber-200 rounded-xl p-3 text-xs text-amber-900 flex items-center gap-2">
+            <Info className="w-4 h-4 text-amber-600 shrink-0" />
+            <span>
+              <strong>Lembrete:</strong> Este é um módulo de demonstração local. Não escreva nome completo, diagnóstico, laudo ou CID.
+            </span>
+          </div>
+
           {messages.map((msg) => (
             <div
               key={msg.id}
@@ -453,13 +514,13 @@ export function HiperDiagnosticDemo() {
                     </button>
                     <button
                       onClick={handleExplainModule}
-                      className="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-medium text-xs transition-colors"
+                      className="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-medium text-xs transition-colors cursor-pointer"
                     >
                       Como funciona o módulo?
                     </button>
                     <button
                       onClick={handleDecline}
-                      className="px-3 py-2 text-slate-400 hover:text-slate-600 rounded-xl text-xs"
+                      className="px-3 py-2 text-slate-400 hover:text-slate-600 rounded-xl text-xs cursor-pointer"
                     >
                       Agora não
                     </button>
@@ -480,14 +541,14 @@ export function HiperDiagnosticDemo() {
                           🧩 Mapa de Expansão: {msg.report.childName}
                         </h3>
                         <p className="text-xs text-slate-500">
-                          Idade: <strong>{msg.report.childAge}</strong> • Hiperfoco Atual: <strong>{msg.report.currentHyperfocus}</strong> • Data: {msg.report.dateStr}
+                          Faixa etária: <strong>{msg.report.childAge}</strong> • Hiperfoco Atual: <strong>{msg.report.currentHyperfocus}</strong> • Data: {msg.report.dateStr}
                         </p>
                       </div>
 
                       <div className="flex items-center gap-2">
                         <button
                           onClick={handleCopyMarkdown}
-                          className="flex items-center gap-1 px-3 py-1.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors"
+                          className="flex items-center gap-1 px-3 py-1.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors cursor-pointer"
                           title="Copiar relatório em Markdown"
                         >
                           {copiedReport ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
@@ -495,7 +556,7 @@ export function HiperDiagnosticDemo() {
                         </button>
                         <button
                           onClick={handleDownloadMarkdown}
-                          className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-indigo-50 text-indigo-700 hover:bg-indigo-100 text-xs font-semibold transition-colors"
+                          className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-indigo-50 text-indigo-700 hover:bg-indigo-100 text-xs font-semibold transition-colors cursor-pointer"
                           title="Baixar arquivo .md"
                         >
                           <Download className="w-3.5 h-3.5" />
@@ -503,7 +564,7 @@ export function HiperDiagnosticDemo() {
                         </button>
                         <button
                           onClick={handlePrint}
-                          className="p-1.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600"
+                          className="p-1.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 cursor-pointer"
                           title="Imprimir relatório"
                         >
                           <Printer className="w-3.5 h-3.5" />
@@ -559,7 +620,7 @@ export function HiperDiagnosticDemo() {
                             </div>
 
                             <p className="text-[10px] text-amber-800 bg-amber-50 px-2 py-1 rounded-lg">
-                              ⚠️ <strong>Alerta:</strong> {bridge.pedagogicalAlert}
+                              ⚠️ <strong>Alerta pedagógico:</strong> {bridge.pedagogicalAlert}
                             </p>
                           </div>
                         ))}
@@ -652,18 +713,72 @@ export function HiperDiagnosticDemo() {
           <div className="p-4 bg-white border-t border-slate-200 space-y-3">
             {/* Progress indicator */}
             <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-              <span>Etapa {currentQ.number} de 10: <strong>{currentQ.label}</strong></span>
-              <span>{Math.round((currentQ.number / 10) * 100)}%</span>
+              <span>Etapa {currentQ.number} de 7: <strong>{currentQ.label}</strong></span>
+              <span>{Math.round((currentQ.number / 7) * 100)}%</span>
             </div>
             <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
               <div
                 className="bg-indigo-600 h-full transition-all duration-300"
-                style={{ width: `${(currentQ.number / 10) * 100}%` }}
+                style={{ width: `${(currentQ.number / 7) * 100}%` }}
               />
             </div>
 
-            {/* If multiselect question (P7: Learning styles) */}
-            {currentQ.type === 'multiselect' ? (
+            {/* Custom UI for Question 1: Nickname (optional) + Age bracket */}
+            {currentQ.type === 'nickname_age' ? (
+              <div className="space-y-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    Como você quer chamar a criança neste relatório? (Opcional)
+                  </label>
+                  <input
+                    type="text"
+                    value={selectedNickname}
+                    onChange={(e) => setSelectedNickname(e.target.value)}
+                    placeholder="Apelido ou iniciais (deixe vazio para usar 'a criança')"
+                    className="w-full px-3.5 py-2 rounded-xl border border-slate-200 bg-white text-sm focus:outline-none focus:border-indigo-600 focus:ring-1 focus:ring-indigo-500"
+                  />
+                  <p className="text-[11px] text-slate-500 mt-1">
+                    💡 Use um apelido ou as iniciais. Não escreva o nome completo.
+                  </p>
+                  <p className="text-[11px] text-amber-700 font-medium mt-1">
+                    ⚠️ Não escreva o nome completo nem o diagnóstico da criança.
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                    Faixa de idade da criança:
+                  </label>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    {AGE_BRACKETS.map((bracket) => (
+                      <button
+                        key={bracket}
+                        type="button"
+                        onClick={() => setSelectedAgeBracket(bracket)}
+                        className={`py-2 px-3 rounded-xl text-xs font-bold border transition-all cursor-pointer text-center ${
+                          selectedAgeBracket === bracket
+                            ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                            : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
+                        }`}
+                      >
+                        {bracket} anos
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex justify-end pt-1">
+                  <button
+                    onClick={handleNicknameAgeSubmit}
+                    className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs transition-colors shadow-xs cursor-pointer"
+                  >
+                    <span>Confirmar e Continuar</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            ) : currentQ.type === 'multiselect' ? (
+              /* Multiselect question (Learning styles) */
               <div className="space-y-3">
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   {currentQ.options?.map((opt) => {
@@ -679,7 +794,7 @@ export function HiperDiagnosticDemo() {
                               : [...prev, opt.id]
                           );
                         }}
-                        className={`text-xs p-2 rounded-xl border text-left font-medium transition-all ${
+                        className={`text-xs p-2 rounded-xl border text-left font-medium transition-all cursor-pointer ${
                           isSelected
                             ? 'bg-indigo-50 border-indigo-600 text-indigo-900 font-bold ring-1 ring-indigo-500/20'
                             : 'border-slate-200 text-slate-700 hover:bg-slate-50'
@@ -703,37 +818,45 @@ export function HiperDiagnosticDemo() {
                 </div>
               </div>
             ) : (
-              /* Text Input */
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handleAnswerSubmit();
-                }}
-                className="flex items-center gap-2"
-              >
-                <input
-                  type="text"
-                  value={inputText}
-                  onChange={(e) => setInputText(e.target.value)}
-                  placeholder={currentQ.placeholder}
-                  autoFocus
-                  className="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-500/20 text-sm text-slate-800"
-                />
-                <button
-                  type="submit"
-                  disabled={!inputText.trim()}
-                  className="p-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 text-white font-semibold transition-colors cursor-pointer shadow-xs"
-                  aria-label="Enviar resposta"
+              /* Text Input with mandatory warning below */
+              <div>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleAnswerSubmit();
+                  }}
+                  className="flex items-center gap-2"
                 >
-                  <Send className="w-4 h-4" />
-                </button>
-              </form>
-            )}
+                  <input
+                    type="text"
+                    value={inputText}
+                    onChange={(e) => setInputText(e.target.value)}
+                    placeholder={currentQ.placeholder}
+                    autoFocus
+                    className="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-500/20 text-sm text-slate-800"
+                  />
+                  <button
+                    type="submit"
+                    disabled={!inputText.trim()}
+                    className="p-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 text-white font-semibold transition-colors cursor-pointer shadow-xs"
+                    aria-label="Enviar resposta"
+                  >
+                    <Send className="w-4 h-4" />
+                  </button>
+                </form>
 
-            {currentQ.helperText && (
-              <p className="text-[11px] text-slate-400">
-                💡 {currentQ.helperText}
-              </p>
+                {/* Mandated Notice under free text inputs (Item 2.5) */}
+                <p className="text-[11px] text-amber-700 font-medium mt-1.5 flex items-center gap-1">
+                  <span>⚠️</span>
+                  <span>Não escreva o nome completo nem o diagnóstico da criança.</span>
+                </p>
+
+                {currentQ.helperText && (
+                  <p className="text-[11px] text-slate-400 mt-1">
+                    💡 {currentQ.helperText}
+                  </p>
+                )}
+              </div>
             )}
           </div>
         )}

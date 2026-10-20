@@ -7,12 +7,9 @@ export interface ValidationForm {
   badgeColor: string;
   estimatedMinutes: number;
   sendUrl: string;
-  editUrl: string;
   audienceHeadline: string;
   audienceDescription: string;
   keyTopics: string[];
-  hypothesisCode?: string;
-  hypothesisNote?: string;
 }
 
 export const VALIDATION_FORMS: ValidationForm[] = [
@@ -23,15 +20,14 @@ export const VALIDATION_FORMS: ValidationForm[] = [
     category: 'gestao',
     badge: 'Gestão Educacional',
     badgeColor: 'bg-amber-100 text-amber-800 border-amber-300 dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800',
-    estimatedMinutes: 5,
+    estimatedMinutes: 3,
     sendUrl: 'https://docs.google.com/forms/d/e/1FAIpQLScbWQeO9FfnWTOU4PUgzrSe9iPT2iZTo-y7J-vMU_F6QyAoIQ/viewform',
-    editUrl: 'https://docs.google.com/forms/d/1HkpHEAFiYNHJaIWlsPUOUcFQsSw7mpGoYaNGmSVNNV0/edit',
-    audienceHeadline: 'Secretarias de Educação, Diretores, Coordenadores e Técnicos',
-    audienceDescription: 'Para lideranças de redes municipais ou estaduais, coordenações pedagógicas e gestores de políticas públicas inclusivas.',
+    audienceHeadline: 'Secretários, coordenações de rede e equipes técnicas de educação municipal ou estadual.',
+    audienceDescription: 'Secretários, coordenações de rede e equipes técnicas de educação municipal ou estadual.',
     keyTopics: [
-      'Políticas de inclusão e infraestrutura das redes de ensino',
-      'Desafios de capacitação e retenção de docentes na educação especial',
-      'Interesse institucional em soluções EdTech/GovTech de baixo custo'
+      'O que a rede contratou nos últimos 24 meses, e o que segue em uso',
+      'Quem participa da decisão de contratar, e de qual rubrica sai',
+      'Qual o maior obstáculo hoje para atender às exigências da política de educação especial'
     ]
   },
   {
@@ -41,76 +37,68 @@ export const VALIDATION_FORMS: ValidationForm[] = [
     category: 'docente',
     badge: 'Sala de Aula Regular',
     badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-300 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800',
-    estimatedMinutes: 4,
+    estimatedMinutes: 10,
     sendUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSeoeCA79prPpFm5iE5fAhZ8OF5rifM4KGFhC8DoEKPm6xBLNQ/viewform',
-    editUrl: 'https://docs.google.com/forms/d/1g8p0ZXJ3AcDVinMEarMiUKPNNX6eyLXU0hOZ5Jz9zxU/edit',
-    audienceHeadline: 'Professoras e Professores da Rede Regular de Ensino',
-    audienceDescription: 'Para educadores que lecionam na sala regular e recebem estudantes neurodivergentes (TEA, TDAH, AH/SD e correlatos).',
+    audienceHeadline: 'Professoras e professores da sala regular que têm estudantes com atendimento educacional especializado.',
+    audienceDescription: 'Professoras e professores da sala regular que têm estudantes com atendimento educacional especializado.',
     keyTopics: [
-      'Manejo diário de atenção e engajamento da turma',
-      'Articulação entre a sala regular e a sala de recursos',
-      'Adaptação curricular sem sobrecarga de trabalho docente'
+      'Como foi a última vez que você adaptou uma atividade, do começo ao fim',
+      'Quanto tempo levou e em que momento do dia',
+      'O que você já tentou, e quem te ajuda nisso hoje'
     ]
   },
   {
     id: 'familia-com-aee',
-    title: 'Roteiro D — Pais e Mães (Com Apoio na Escola)',
-    codeName: 'Roteiro D — Família com AEE',
+    title: 'Roteiro D — Família com Apoio na Escola',
+    codeName: 'Roteiro D — Família com Apoio na Escola',
     category: 'familia',
-    badge: 'Para a Família • Com Sala de Apoio',
+    badge: 'Família • Com Apoio Especializado',
     badgeColor: 'bg-indigo-100 text-indigo-800 border-indigo-300 dark:bg-indigo-950/60 dark:text-indigo-300 dark:border-indigo-800',
-    estimatedMinutes: 4,
+    estimatedMinutes: 10,
     sendUrl: 'https://docs.google.com/forms/d/e/1FAIpQLScP_YDK8NDI6D2Ylypj-DFAJQ78yRrKiYCWm4OXsfrXVOUwwg/viewform',
-    editUrl: 'https://docs.google.com/forms/d/1Ffofe3Gm3UtEf4vjiFPFXizGh512DygvqQgSUoPQZ9M/edit',
-    audienceHeadline: 'Mães, pais e responsáveis cujo filho(a) tem atendimento especial na escola',
-    audienceDescription: 'Escolha este se o seu filho(a) já recebe ajuda extra na própria escola (como salinha de apoio, atendimento no outro turno ou professora de apoio).',
+    audienceHeadline: 'Família com apoio especializado na escola',
+    audienceDescription: 'Escolha este se seu filho já recebe atendimento especializado na escola — sala de recursos, contraturno ou professora de apoio.',
     keyTopics: [
-      'Como seu filho(a) está se desenvolvendo com esse apoio da escola',
-      'Se a escola usa os assuntos que ele(a) mais ama para ensinar',
-      'Como é a rotina de tarefas, estudos e brincadeiras em casa'
+      'Como foi a última vez que vocês sentaram para estudar em casa',
+      'O que foi mais difícil nessa vez',
+      'O que vocês já tentaram fora da escola'
     ]
   },
   {
     id: 'familia-sem-aee',
-    title: 'Roteiro E — Pais e Mães (Sem Apoio na Escola)',
-    codeName: 'Roteiro E — Família sem AEE (H6)',
+    title: 'Roteiro E — Família sem Apoio na Escola',
+    codeName: 'Roteiro E — Família sem Apoio na Escola',
     category: 'familia',
-    badge: 'Para a Família • Sem Sala de Apoio',
+    badge: 'Família • Sem Apoio Especializado',
     badgeColor: 'bg-rose-100 text-rose-800 border-rose-300 dark:bg-rose-950/60 dark:text-rose-300 dark:border-rose-800',
-    estimatedMinutes: 4,
+    estimatedMinutes: 8,
     sendUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSfJubH6LmG-PLZqenwNoxs6dw5BiGiiJEMus2FzD-MFjTh7wQ/viewform',
-    editUrl: 'https://docs.google.com/forms/d/11z8YDpfCbJOAGeVKuo0AT9MKhuSjUJe9zBSE4DEcgDQ/edit',
-    hypothesisCode: 'H6',
-    hypothesisNote: 'Feito especialmente para ouvir quem se vira em casa para ajudar o filho(a) sem ter apoio especial da escola.',
-    audienceHeadline: 'Mães, pais e responsáveis cujo filho(a) NÃO tem atendimento especial na escola',
-    audienceDescription: 'Escolha este se o seu filho(a) tem dificuldade para aprender, autismo ou TDAH, mas a escola ainda NÃO oferece esse apoio extra (ou não conseguiu vaga) e ele(a) só vai na aula normal.',
+    audienceHeadline: 'Família sem apoio especializado na escola',
+    audienceDescription: 'Escolha este se seu filho ainda não tem atendimento especializado na escola.',
     keyTopics: [
-      'As dificuldades de não conseguir esse apoio especial na escola',
-      'O que você faz em casa para ajudar seu filho(a) a aprender',
-      'Como uma ferramenta simples e gratuita ajudaria no seu dia a dia'
+      'Como foi a última vez que vocês sentaram para estudar em casa',
+      'O que você faz quando ele trava numa atividade',
+      'O que vocês já tentaram fora da escola'
     ]
   },
   {
     id: 'roteiro-g-clinico',
     title: 'Roteiro G — Atendimento Clínico',
-    codeName: 'Roteiro G — Material pedagógico no atendimento clínico',
+    codeName: 'Roteiro G — Atendimento Clínico',
     category: 'clinico',
-    badge: 'Clínica & Psicopedagogia',
+    badge: 'Clínica & Terapia',
     badgeColor: 'bg-purple-100 text-purple-800 border-purple-300 dark:bg-purple-950/60 dark:text-purple-300 dark:border-purple-800',
     estimatedMinutes: 10,
     sendUrl: 'https://docs.google.com/forms/d/e/1FAIpQLScsfRM_33ZV9DDDSBEmOoOqtrQiV2lTo3AGS-eH4RSvdyFtgw/viewform?usp=sharing&ouid=111041022314259236485',
-    editUrl: 'https://docs.google.com/forms/d/e/1FAIpQLScsfRM_33ZV9DDDSBEmOoOqtrQiV2lTo3AGS-eH4RSvdyFtgw/viewform?usp=sharing&ouid=111041022314259236485',
-    audienceHeadline: 'Psicopedagogos, Psicólogos e Profissionais da Saúde/Aprendizagem',
-    audienceDescription: 'Pesquisa sobre material pedagógico no atendimento clínico com psicopedagogos, psicólogos e demais profissionais que atendem crianças com demandas de aprendizagem.',
+    audienceHeadline: 'Psicopedagogos, psicólogos e demais profissionais que atendem crianças com demandas de aprendizagem.',
+    audienceDescription: 'Psicopedagogos, psicólogos e demais profissionais que atendem crianças com demandas de aprendizagem.',
     keyTopics: [
-      'Sua prática clínica no atendimento a crianças com demandas de aprendizagem',
-      'O que você indica para famílias e escolas',
-      'Materiais pedagógicos e recursos que você compra e utiliza'
+      'Como foi a última vez que você preparou material para um atendimento',
+      'O que você indicou a famílias e escolas nos últimos 12 meses',
+      'O que você comprou para a sua própria prática'
     ]
   }
 ];
-
-export const DRIVE_FOLDER_URL = 'https://drive.google.com/drive/folders/1WXnygC9_oHrRTT5DK0d5ab6SD5mGRwh8';
 
 export type UserRole = 'gestor' | 'professor' | 'familia' | 'clinico';
 

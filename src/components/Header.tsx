@@ -1,14 +1,13 @@
 import React from 'react';
-import { Sparkles, FileText, Compass, Bot, FolderLock, ZoomIn, ZoomOut, Contrast, Menu, X } from 'lucide-react';
+import { Sparkles, FileText, Compass, Bot, ZoomIn, ZoomOut, Contrast, Menu, X } from 'lucide-react';
 
 interface HeaderProps {
-  activeTab: 'forms' | 'wizard' | 'hiper' | 'team';
-  setActiveTab: (tab: 'forms' | 'wizard' | 'hiper' | 'team') => void;
+  activeTab: 'forms' | 'wizard' | 'hiper';
+  setActiveTab: (tab: 'forms' | 'wizard' | 'hiper') => void;
   fontSize: 'normal' | 'large';
   setFontSize: React.Dispatch<React.SetStateAction<'normal' | 'large'>>;
   highContrast: boolean;
   setHighContrast: React.Dispatch<React.SetStateAction<boolean>>;
-  isAdminUnlocked?: boolean;
 }
 
 export function Header({
@@ -17,16 +16,14 @@ export function Header({
   fontSize,
   setFontSize,
   highContrast,
-  setHighContrast,
-  isAdminUnlocked = false
+  setHighContrast
 }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   const navItems = [
     { id: 'forms' as const, label: 'Formulários', icon: FileText, count: '5' },
     { id: 'wizard' as const, label: 'Descubra o Seu', icon: Compass },
-    { id: 'hiper' as const, label: 'Módulo HIPER', icon: Bot, highlight: true },
-    ...(isAdminUnlocked ? [{ id: 'team' as const, label: 'Painel da Pesquisa', icon: FolderLock }] : [])
+    { id: 'hiper' as const, label: 'Módulo HIPER', icon: Bot, highlight: true }
   ];
 
   return (

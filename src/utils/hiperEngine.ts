@@ -1,11 +1,13 @@
+export type AgeBracket = 'até 6' | '7 a 10' | '11 a 14' | '15 ou mais';
+
 export interface DiagnosticQuestion {
   id: string;
   number: number;
   label: string;
   promptText: string;
   helperText?: string;
-  placeholder: string;
-  type: 'text' | 'multiselect' | 'select';
+  placeholder?: string;
+  type: 'text' | 'multiselect' | 'nickname_age';
   options?: { id: string; label: string }[];
 }
 
@@ -13,11 +15,11 @@ export const DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
   {
     number: 1,
     id: 'p1',
-    label: 'Nome e Idade',
-    promptText: 'Qual é o nome da criança e quantos anos ela tem?',
-    placeholder: 'Ex: Lucas, 8 anos',
-    type: 'text',
-    helperText: 'Ajuda a personalizar as pontes e calibrar a maturidade das atividades.'
+    label: 'Identificação & Faixa Etária',
+    promptText: 'Como você quer chamar a criança neste relatório? E qual é a faixa de idade dela?',
+    helperText: 'Use um apelido ou as iniciais. Não escreva o nome completo.',
+    placeholder: 'Apelido ou iniciais (opcional)',
+    type: 'nickname_age'
   },
   {
     number: 2,
@@ -30,23 +32,15 @@ export const DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
   },
   {
     number: 3,
-    id: 'p3',
-    label: 'Intensidade e Tempo',
-    promptText: 'Há quanto tempo ela se interessa por esse tema? E o quanto ele domina as conversas, brincadeiras ou desenhos dela no dia a dia?',
-    placeholder: 'Ex: Há cerca de 1 ano. Praticamente 90% das brincadeiras e conversas giram em torno disso.',
-    type: 'text'
-  },
-  {
-    number: 4,
     id: 'p4',
     label: 'Hiperfoco Anterior',
     promptText: 'Já existiu algum hiperfoco ANTERIOR que ela amava e hoje não menciona mais? Qual?',
-    placeholder: 'Ex: Antes eram animais marinhos / tubarões, ou blocos de montar lego (ou "Nenhum anterior marcante")',
+    placeholder: 'Ex: Animais marinhos / tubarões, blocos de montar lego (ou "Nenhum anterior marcante")',
     type: 'text',
     helperText: 'Hiperfocos antigos são minas de ouro para conexões seguras de Nível Adjacente.'
   },
   {
-    number: 5,
+    number: 4,
     id: 'p5',
     label: 'Assunto Secundário',
     promptText: 'Existe algum assunto secundário que ela demonstra interesse, mesmo que bem menor? (pode ser algo que ela só menciona de vez em quando)',
@@ -54,16 +48,16 @@ export const DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
     type: 'text'
   },
   {
-    number: 6,
+    number: 5,
     id: 'p6',
     label: 'Rejeições Críticas',
     promptText: 'O que a criança DEFINITIVAMENTE não gosta ou rejeita? (temas, formatos, situações)',
-    placeholder: 'Ex: Odeia copiar textos longos, rejeita temas de princesas, não gosta de barulhos altos ou esportes coletivos...',
+    placeholder: 'Ex: Odeia copiar textos longos sem ilustrações, rejeita barulhos altos ou tarefas repetitivas...',
     type: 'text',
     helperText: 'Regra de ouro: nunca iremos sugerir pontes que toquem nessas rejeições.'
   },
   {
-    number: 7,
+    number: 6,
     id: 'p7',
     label: 'Estilo de Aprendizagem',
     promptText: 'Como ela aprende melhor? Marque os que se aplicam:',
@@ -77,47 +71,28 @@ export const DIAGNOSTIC_QUESTIONS: DiagnosticQuestion[] = [
       { id: 'leitura_escrita', label: '(e) Leitura e escrita' },
       { id: 'jogos_competicoes', label: '(f) Jogos e competições' },
       { id: 'colecionar_catalogar', label: '(g) Colecionar e catalogar' },
-      { id: 'outro', label: '(h) Outro formato prático' }
+      { id: 'outro', label: '(h) Outro — qual?' }
     ]
   },
   {
-    number: 8,
-    id: 'p8',
-    label: 'Contexto Escolar',
-    promptText: 'Qual é o ano escolar/série da criança? Ela está em escola regular, AEE, escola especial ou ensino domiciliar?',
-    placeholder: 'Ex: 3º ano do Ensino Fundamental em escola regular com AEE 2x por semana',
-    type: 'text'
-  },
-  {
-    number: 9,
-    id: 'p9',
-    label: 'Diagnóstico (Opcional)',
-    promptText: 'A criança tem diagnóstico confirmado? (TDAH, TEA, Altas Habilidades, outro) — esta informação é opcional, mas ajuda a calibrar as sugestões.',
-    placeholder: 'Ex: TEA Nível 1 de suporte, TDAH desatento, Dupla Excepcionalidade, Em investigação...',
-    type: 'text',
-    helperText: 'Calibra a sensibilidade sensorial e a cadência de transição.'
-  },
-  {
-    number: 10,
+    number: 7,
     id: 'p10',
     label: 'Maior Desafio Diário',
     promptText: 'Qual é o maior DESAFIO atual no dia a dia dela relacionado ao hiperfoco? (ex: não consegue parar para fazer outras atividades, se frustra quando o assunto muda, não interage com crianças que não compartilham o tema, etc.)',
-    placeholder: 'Ex: Crises de frustração quando precisa mudar de atividade para o dever de casa; isolamento social nos intervalos.',
+    placeholder: 'Ex: Forte frustração quando precisa mudar de atividade para o dever de casa; isolamento nos intervalos.',
     type: 'text'
   }
 ];
 
 export interface DiagnosticAnswers {
-  p1_childNameAge: string;
-  p2_currentHyperfocus: string;
-  p3_durationIntensity: string;
-  p4_pastHyperfocus: string;
-  p5_secondaryInterest: string;
-  p6_rejections: string;
-  p7_learningStyles: string[];
-  p8_schoolContext: string;
-  p9_diagnosisOptional: string;
-  p10_dailyChallenge: string;
+  childNickname?: string;
+  ageBracket: AgeBracket;
+  currentHyperfocus: string;
+  pastHyperfocus?: string;
+  secondaryInterest?: string;
+  rejections?: string;
+  learningStyles: string[];
+  dailyChallenge?: string;
 }
 
 export interface ThematicBridge {
@@ -150,27 +125,19 @@ Tenho aqui um jeito de descobrir novos assuntos que podem combinar super bem com
 São só algumas perguntinhas rápidas e eu monto um mapa de novos territórios pra explorar.
 Posso começar?`;
 
-export function parseNameAndAge(p1: string): { name: string; age: string } {
-  const clean = p1.trim();
-  const match = clean.match(/^([^,]+)(?:,\s*(\d+.*))?$/);
-  if (match) {
-    const name = match[1].trim();
-    const age = match[2] ? match[2].trim() : 'idade informada';
-    return { name, age };
-  }
-  return { name: clean || 'Estudante', age: 'em idade escolar' };
-}
-
 export function generateExpansionReport(answers: DiagnosticAnswers): ExpansionReport {
-  const { name, age } = parseNameAndAge(answers.p1_childNameAge || 'A criança');
-  const focus = answers.p2_currentHyperfocus.trim() || 'o tema de interesse central';
-  const pastFocus = answers.p4_pastHyperfocus.trim();
-  const secondary = answers.p5_secondaryInterest.trim();
-  const rejections = answers.p6_rejections.trim();
-  const challenge = answers.p10_dailyChallenge.trim() || 'transição entre atividades e flexibilidade atencional';
+  const rawName = (answers.childNickname || '').trim();
+  const name = rawName ? rawName : 'a criança';
+  const displayNameCapitalized = rawName ? rawName : 'A criança';
+  const age = answers.ageBracket || '7 a 10';
+  const focus = (answers.currentHyperfocus || '').trim() || 'o tema de interesse central';
+  const pastFocus = (answers.pastHyperfocus || '').trim();
+  const secondary = (answers.secondaryInterest || '').trim();
+  const rejections = (answers.rejections || '').trim();
+  const challenge = (answers.dailyChallenge || '').trim() || 'transição entre atividades e flexibilidade atencional';
 
-  const styles = (answers.p7_learningStyles || []).map(s => {
-    const found = DIAGNOSTIC_QUESTIONS[6].options?.find(o => o.id === s);
+  const styles = (answers.learningStyles || []).map(s => {
+    const found = DIAGNOSTIC_QUESTIONS[5].options?.find(o => o.id === s);
     return found ? found.label.replace(/^\([a-z]\)\s*/, '') : s;
   });
   const stylesText = styles.length > 0 ? styles.join(', ') : 'estímulos visuais e atividades práticas';
@@ -178,7 +145,7 @@ export function generateExpansionReport(answers: DiagnosticAnswers): ExpansionRe
   const dateStr = new Date().toLocaleDateString('pt-BR');
 
   // Profile Analysis paragraph (4-6 lines)
-  const profileAnalysis = `${name} apresenta um perfil de vinculação atencional profunda e altamente mobilizado por ${focus}, demonstrando retenção e motivação intrínseca quando imerso em seu centro de interesse. Sua curva de absorção cognitiva é potencializada através de ${stylesText}, demandando pontes claras de significado que conectem novos conteúdos ao seu repertório consolidado. O desengajamento ocorre principalmente sob ${rejections || 'pressões de ruptura abrupta ou tarefas desprovidas de contexto visual/prático'}, sendo essencial preservar a previsibilidade da transição. A oportunidade central de expansão consiste em utilizar o vocabulário e a mecânica de ${focus} como âncora afetiva para franquear o acesso a territórios conexos de investigação científica, espacial e narrativa.`;
+  const profileAnalysis = `${displayNameCapitalized} apresenta um perfil de vinculação atencional profunda e altamente mobilizado por ${focus}, demonstrando retenção e motivação intrínseca quando imerso em seu centro de interesse. Sua curva de absorção cognitiva é potencializada através de ${stylesText}, demandando pontes claras de significado que conectem novos conteúdos ao seu repertório consolidado. O desengajamento ocorre principalmente sob ${rejections || 'pressões de ruptura abrupta ou tarefas desprovidas de contexto visual/prático'}, sendo essencial preservar a previsibilidade da transição. A oportunidade central de expansão consiste em utilizar o vocabulário e a mecânica de ${focus} como âncora afetiva para franquear o acesso a territórios conexos de investigação científica, espacial e narrativa.`;
 
   // Generate Bridges
   const bridges: ThematicBridge[] = [];
@@ -259,7 +226,7 @@ export function generateExpansionReport(answers: DiagnosticAnswers): ExpansionRe
   let markdown = `---
 
 # 🧩 Relatório de Expansão de Hiperfoco
-**Criança:** ${name} | **Idade:** ${age} | **Hiperfoco atual:** ${focus}
+**Criança:** ${name} | **Faixa etária:** ${age} anos | **Hiperfoco atual:** ${focus}
 **Data:** ${dateStr}
 
 ---
@@ -327,7 +294,7 @@ ${transitionStrategy}
 
   return {
     childName: name,
-    childAge: age,
+    childAge: `${age} anos`,
     currentHyperfocus: focus,
     dateStr,
     profileAnalysis,
