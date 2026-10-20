@@ -8,6 +8,7 @@ interface HeaderProps {
   setFontSize: React.Dispatch<React.SetStateAction<'normal' | 'large'>>;
   highContrast: boolean;
   setHighContrast: React.Dispatch<React.SetStateAction<boolean>>;
+  isAdminUnlocked?: boolean;
 }
 
 export function Header({
@@ -16,7 +17,8 @@ export function Header({
   fontSize,
   setFontSize,
   highContrast,
-  setHighContrast
+  setHighContrast,
+  isAdminUnlocked = false
 }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
@@ -24,7 +26,7 @@ export function Header({
     { id: 'forms' as const, label: 'Formulários', icon: FileText, count: '5' },
     { id: 'wizard' as const, label: 'Descubra o Seu', icon: Compass },
     { id: 'hiper' as const, label: 'Módulo HIPER', icon: Bot, highlight: true },
-    { id: 'team' as const, label: 'Painel da Pesquisa', icon: FolderLock }
+    ...(isAdminUnlocked ? [{ id: 'team' as const, label: 'Painel da Pesquisa', icon: FolderLock }] : [])
   ];
 
   return (
