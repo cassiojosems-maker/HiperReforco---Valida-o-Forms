@@ -11,7 +11,7 @@ export function Footer() {
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 p-0.5 flex items-center justify-center shadow-xs">
                 <img
-                  src="/assets/aistudio/Logo_Hiper_88795513.png"
+                  src="/assets/logo-hiper.png"
                   alt="HiperReforço"
                   className="w-full h-full object-contain"
                 />

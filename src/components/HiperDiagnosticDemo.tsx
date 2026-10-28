@@ -363,7 +363,7 @@ export function HiperDiagnosticDemo() {
         <div className="flex items-start sm:items-center gap-4">
           <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white p-1.5 shadow-md shrink-0 flex items-center justify-center">
             <img
-              src="/assets/aistudio/Logo_Hiper_88795513.png"
+              src="/assets/logo-hiper.png"
               alt="Logo HiperReforço"
               className="w-full h-full object-contain"
             />
@@ -432,7 +432,7 @@ export function HiperDiagnosticDemo() {
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-white border border-slate-200 p-1 flex items-center justify-center shadow-xs">
               <img
-                src="/assets/aistudio/Logo_Hiper_88795513.png"
+                src="/assets/logo-hiper.png"
                 alt="HIPER"
                 className="w-full h-full object-contain"
               />
@@ -484,7 +484,7 @@ export function HiperDiagnosticDemo() {
               {msg.sender === 'hiper' && (
                 <div className="w-8 h-8 rounded-xl bg-white border border-slate-200 p-0.5 flex items-center justify-center shrink-0 shadow-xs">
                   <img
-                    src="/assets/aistudio/Logo_Hiper_88795513.png"
+                    src="/assets/logo-hiper.png"
                     alt="HIPER"
                     className="w-full h-full object-contain"
                   />
@@ -535,7 +535,7 @@ export function HiperDiagnosticDemo() {
                       <div>
                         <div className="flex items-center gap-2 text-xs font-bold text-indigo-700">
                           <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                          <span>Relatório Oficial de Expansão</span>
+                          <span>Relatório de Expansão</span>
                         </div>
                         <h3 className="text-xl font-extrabold text-slate-900 mt-0.5">
                           🧩 Mapa de Expansão: {msg.report.childName}
@@ -694,7 +694,7 @@ export function HiperDiagnosticDemo() {
             <div className="flex gap-2 items-center text-xs text-slate-400 py-1">
               <div className="w-7 h-7 rounded-xl bg-white border border-slate-200 p-0.5 flex items-center justify-center shadow-xs">
                 <img
-                  src="/assets/aistudio/Logo_Hiper_88795513.png"
+                  src="/assets/logo-hiper.png"
                   alt="HIPER"
                   className="w-full h-full object-contain"
                 />

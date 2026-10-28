@@ -42,7 +42,7 @@ export function Header({
           >
             <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white border border-slate-200/90 shadow-sm p-1 flex items-center justify-center group-hover:scale-105 group-hover:border-indigo-300 transition-all">
               <img
-                src="/assets/aistudio/Logo_Hiper_88795513.png"
+                src="/assets/logo-hiper.png"
                 alt="Logo HiperReforço"
                 className="w-full h-full object-contain"
               />

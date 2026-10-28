@@ -77,7 +77,7 @@ export function FormModal({ form, onClose }: FormModalProps) {
             className="w-full h-full border-0 bg-white"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           >
-            Carregando formulário oficial...
+            Carregando formulário...
           </iframe>
         </div>
 

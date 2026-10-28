@@ -104,7 +104,7 @@ export function FormCardsGrid({
             Instrumentos de Coleta
           </span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-            Escolha o Seu Formulário Oficial
+            Escolha o Seu Formulário
           </h2>
           <p className="text-sm text-slate-600 mt-1 max-w-2xl">
             Clique no botão do perfil correspondente para responder diretamente no Google Forms ou pré-visualizar aqui no navegador.
@@ -201,7 +201,7 @@ export function FormCardsGrid({
                     rel="noopener noreferrer"
                     className={`w-full flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl shadow-sm text-sm transition-all cursor-pointer ${style.btnBg} hover:shadow-md hover:scale-[1.01]`}
                   >
-                    <span>Preencher Formulário Oficial</span>
+                    <span>Preencher Formulário</span>
                     <ExternalLink className="w-4 h-4" />
                   </a>
 

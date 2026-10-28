@@ -22,14 +22,14 @@ export function Hero({ onSelectRoleQuick, onOpenWizard, highContrast = false }: 
         <div className="flex flex-col items-center justify-center mb-6">
           <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-white p-2 shadow-md border border-indigo-100 flex items-center justify-center mb-3 hover:scale-105 transition-transform">
             <img
-              src="/assets/aistudio/Logo_Hiper_88795513.png"
+              src="/assets/logo-hiper.png"
               alt="Logo HiperReforço — Conhecimento em Evolução"
               className="w-full h-full object-contain"
             />
           </div>
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-indigo-100/80 text-indigo-900 border border-indigo-200/70 shadow-xs">
             <Sparkles className="w-4 h-4 text-indigo-600 animate-pulse" />
-            <span>Validação de Hipóteses • Pesquisa Nacional HiperReforço</span>
+            <span>Validação de Hipóteses • Pesquisa HiperReforço</span>
           </div>
         </div>
 
@@ -43,7 +43,7 @@ export function Hero({ onSelectRoleQuick, onOpenWizard, highContrast = false }: 
           </h1>
 
           <p className="text-base sm:text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed">
-            Estamos construindo a plataforma EdTech que utiliza os temas de fascínio de crianças e jovens neurodivergentes (TEA, TDAH, Altas Habilidades) como ponto de entrada para o currículo. Selecione o seu perfil abaixo e participe da pesquisa oficial:
+            Estamos construindo a plataforma EdTech que utiliza os temas de fascínio de crianças e jovens neurodivergentes (TEA, TDAH, Altas Habilidades) como ponto de entrada para o currículo. Selecione o seu perfil abaixo e participe da pesquisa:
           </p>
         </div>
 
